@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496351683809",
+    "project_id": "save-wallet-app",
+    "storage_bucket": "save-wallet-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496351683809:android:1cd9fe10fed8d564ee83a0",
+        "android_client_info": {
+          "package_name": "com.example.crypto_coins_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB02ItHWK5xjSVTzgkD6oenstsE5Hs2JSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
