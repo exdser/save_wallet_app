@@ -25,10 +25,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('Crypto Currencies List')),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
-      ),
+      appBar: AppBar(title: Center(child: Text('Crypto Currencies List'))),
       body: RefreshIndicator(
         onRefresh: () async {
           final completer = Completer();

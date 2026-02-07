@@ -1,6 +1,12 @@
-  part of 'crypto_coin_bloc.dart';
- abstract class CryptoCoinDetailsEvent{}
+part of 'crypto_coin_bloc.dart';
 
- class LoadCryptoDetails extends CryptoCoinDetailsEvent{
-  
- }
+abstract class CryptoCoinDetailsEvent extends Equatable {}
+
+class LoadCryptoDetails extends CryptoCoinDetailsEvent {
+  final Completer? completer;
+
+  LoadCryptoDetails({this.completer});
+
+  @override
+  List<Object?> get props => [completer];
+}
