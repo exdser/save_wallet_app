@@ -1,16 +1,20 @@
-# crypto_coins_list
+# SaveWallet Crypto 🪙
 
-A new Flutter project.
+![Flutter](https://img.shields.io)
+![Dart](https://img.shields.io)
+![BLoC](https://img.shields.io)
 
-## Getting Started
+**SaveWallet** — мобильное приложение на Flutter для мониторинга криптовалют и управления активами. Проект построен с использованием современной архитектуры и лучших практик разработки на Dart.
 
-This project is a starting point for a Flutter application.
+## 🚀 Текущий функционал
 
-A few resources to get you started if this is your first Flutter project:
+- **Крипто-дашборд**: Загрузка списка топовых криптовалют через API.
+- **Детализация токена**: Переход на экран с подробной информацией о монете (цена, капитализация, изменения) по нажатию.
+- **Стейт-менеджмент**: Обработка состояний загрузки, успеха и ошибок с помощью BLoC.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠 Технологический стек
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **State Management**: [flutter_bloc](https://pub.dev) — разделение бизнес-логики и интерфейса.
+- **Networking**: [Dio](https://pub.dev) — мощный HTTP-клиент с поддержкой интерцепторов.
+- **Dependency Injection**: [GetIt](https://pub.dev) — сервис-локатор для управления зависимостями.
+- **Serialization**: [json_serializable](https://pub.dev) + [json_annotation](https://pub.dev) — автоматическая генерация моделей данных.
