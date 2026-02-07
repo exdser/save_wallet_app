@@ -1,9 +1,5 @@
 # SaveWallet Crypto 🪙
 
-![Flutter](https://img.shields.io)
-![Dart](https://img.shields.io)
-![BLoC](https://img.shields.io)
-
 **SaveWallet** — мобильное приложение на Flutter для мониторинга криптовалют и управления активами. Проект построен с использованием современной архитектуры и лучших практик разработки на Dart.
 
 ## 🚀 Текущий функционал
