@@ -5,13 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class CryptoCoinScreen extends StatefulWidget {
-  const CryptoCoinScreen({super.key, this.coin});
-  final CryptoCoin? coin;
+  const CryptoCoinScreen({super.key, required this.coin});
+  final CryptoCoin coin;
   @override
   State<CryptoCoinScreen> createState() => _CryptoCoinScreenState();
 }
 
 class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
+   CryptoCoin? coin;
   String? imageUrl;
   String? coinName;
   double? high24h;
@@ -22,22 +23,18 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
   );
   @override
   void initState() {
-    _cryptoDetailsBloc.add(LoadCryptoDetails(currencyCode: widget.coin?.name));
+    _cryptoDetailsBloc.add(LoadCryptoDetails(currencyCode: widget.coin.name));
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     final args = ModalRoute.of(context)?.settings.arguments;
-    assert(args != null && args is Set<Object>, 'You must provide args');
-    if (args is Set<Object>) {
-      coinName = args.elementAt(0) as String;
-      high24h = args.elementAt(1) as double;
-      low24h = args.elementAt(2) as double;
-      imageUrl = args.elementAt(3) as String;
-      priceInUsd = args.elementAt(4) as double;
-    }
-    setState(() {});
+    assert(args != null && args is CryptoCoin, 'You must provide String args');
+    coin = args as CryptoCoin;
+    _cryptoDetailsBloc.add(LoadCryptoDetails(currencyCode: coin!.name));
+    super.didChangeDependencies();
+
     super.didChangeDependencies();
   }
 
@@ -140,7 +137,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                     ),
                     onPressed: () {
                       _cryptoDetailsBloc.add(
-                        LoadCryptoDetails(currencyCode: widget.coin!.name),
+                        LoadCryptoDetails(currencyCode: widget.coin.name),
                       );
                     },
                     child: Text('Try again', style: TextStyle(fontSize: 18)),

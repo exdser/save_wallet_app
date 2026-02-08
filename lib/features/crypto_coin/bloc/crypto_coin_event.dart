@@ -12,8 +12,8 @@ class LoadCryptoDetails extends CryptoCoinDetailsEvent {
     required this.currencyCode,
   });
 
-  final String? currencyCode;
+  final String currencyCode;
 
   @override
-  List<Object> get props => super.props..add(currencyCode!);
+  List<Object> get props => super.props..add(currencyCode);
 }

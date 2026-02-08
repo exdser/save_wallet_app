@@ -10,13 +10,11 @@ class CryptoCoinsDetails extends CryptoCoin {
     required this.high24h,
     required this.low24h,
     required this.lastUpdate,
-    required super.name,
-    required super.priceInUSD,
-    required super.imageUrl,
+    required super.name, required super.details,
   });
 
   @override
   List<Object> get props {
-    return [high24h, low24h, name, lastUpdate, priceInUSD, imageUrl];
+    return [high24h, low24h, name, lastUpdate];
   }
 }
