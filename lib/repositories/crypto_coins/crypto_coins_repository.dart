@@ -16,12 +16,15 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final cryptoCoinsList = dataRaw.entries.map((e) {
       final usdData =
           (e.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-
+      final imageUrl = usdData['IMAGEURL'];
+      final fullImageUrl = imageUrl != null
+          ? 'https://www.cryptocompare.com$imageUrl'
+          : 'https://via.placeholder.com';
       return CryptoCoin(
         name: e.key,
         details: CryptoCoinDetail(
           priceInUSD: (usdData['PRICE'] as num).toDouble(),
-          imageUrl: usdData['IMAGEURL'],
+          imageUrl: fullImageUrl,
           toSym: usdData['TOSYMBOL'],
           lastUpdate: DateTime.fromMillisecondsSinceEpoch(
             (usdData['LASTUPDATE'] as int) * 1000,
@@ -44,11 +47,15 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final rawData = data['RAW'] as Map<String, dynamic>;
     final coinData = rawData[currencyCode] as Map<String, dynamic>;
     final usdData = coinData['USD'] as Map<String, dynamic>;
+    final imageUrl = usdData['IMAGEURL'];
+    final fullImageUrl = imageUrl != null
+        ? 'https://www.cryptocompare.com$imageUrl'
+        : 'https://via.placeholder.com';
     return CryptoCoin(
       name: currencyCode,
       details: CryptoCoinDetail(
         priceInUSD: (usdData['PRICE'] as num).toDouble(),
-        imageUrl: usdData['IMAGEURL'],
+        imageUrl: fullImageUrl,
         toSym: usdData['TOSYMBOL'],
         lastUpdate: DateTime.fromMillisecondsSinceEpoch(
           (usdData['LASTUPDATE'] as int) * 1000,

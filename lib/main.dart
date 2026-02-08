@@ -12,39 +12,58 @@ import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  
+void main() {
+  // 1. Сначала инициализируем Talker, так как он нужен для логирования ошибок в зоне
   final talker = TalkerFlutter.init();
-  GetIt.I.registerSingleton(talker);
-  GetIt.I<Talker>().debug('Talker started...');
+  GetIt.I.registerSingleton<Talker>(talker);
+  
+  // 2. Оборачиваем всё выполнение в runZonedGuarded
+  runZonedGuarded(() async {
+    // Теперь ВСЕ вызовы внутри этой зоны
+    WidgetsFlutterBinding.ensureInitialized();
+    
+    // Инициализация Firebase
+    final app = await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    
+    talker.info('Firebase App ID: ${app.options.appId}');
+    talker.debug('Talker started...');
 
-  final app = await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  talker.info(app.options.appId);
-  final dio = Dio();
-  dio.interceptors.add(
-    TalkerDioLogger(
+    // Настройка Dio
+    final dio = Dio();
+    dio.interceptors.add(
+      TalkerDioLogger(
+        talker: talker,
+        settings: const TalkerDioLoggerSettings(printResponseData: false),
+      ),
+    );
+
+    // Настройка Bloc Observer
+    Bloc.observer = TalkerBlocObserver(
       talker: talker,
-      settings: TalkerDioLoggerSettings(printResponseData: false),
-    ),
-  );
-  Bloc.observer = TalkerBlocObserver(
-    talker: talker,
-    settings: TalkerBlocLoggerSettings(
-      printStateFullData: false,
-      printEventFullData: false,
-    ),
-  );
-  GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
-    () => CryptoCoinsRepository(dio: dio),
-  );
-  FlutterError.onError = (details) =>
-      GetIt.I<Talker>().handle(details.exception, details.stack);
+      settings: const TalkerBlocLoggerSettings(
+        printStateFullData: false,
+        printEventFullData: false,
+      ),
+    );
 
-  runZonedGuarded(
-    () => runApp(const CryptoCurrenciesListApp()),
-    (error, stack) => GetIt.I<Talker>().handle(error, stack),
-  );
+    // Регистрация репозитория
+    GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
+      () => CryptoCoinsRepository(dio: dio),
+    );
+
+    // Обработка ошибок Flutter внутри зоны
+    FlutterError.onError = (details) {
+      talker.handle(details.exception, details.stack);
+    };
+
+    // Запуск приложения
+    runApp(const CryptoCurrenciesListApp());
+    
+  }, (error, stack) {
+    // Глобальный перехват ошибок Dart (out of zone/async errors)
+    GetIt.I<Talker>().handle(error, stack);
+  });
 }
+
