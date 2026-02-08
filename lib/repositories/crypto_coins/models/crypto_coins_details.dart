@@ -1,25 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:equatable/equatable.dart';
 
-class CryptoCoinsDetails extends Equatable {
+import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
 
+class CryptoCoinsDetails extends CryptoCoin {
   final double high24h;
   final double low24h;
+  final DateTime lastUpdate;
 
-  final String name;
-  final double priceInUSD;
-  final String imageUrl;
-
-  const CryptoCoinsDetails({required this.name, required this.priceInUSD, required this.imageUrl, required this.high24h, required this.low24h});
+  const CryptoCoinsDetails({
+    required this.high24h,
+    required this.low24h,
+    required this.lastUpdate,
+    required super.name,
+    required super.priceInUSD,
+    required super.imageUrl,
+  });
 
   @override
   List<Object> get props {
-    return [
-      high24h,
-      low24h,
-      name,
-      priceInUSD,
-      imageUrl,
-    ];
+    return [high24h, low24h, name, lastUpdate, priceInUSD, imageUrl];
   }
 }

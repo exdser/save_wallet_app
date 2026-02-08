@@ -17,18 +17,18 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final cryptoCoinsList = dataRaw.entries.map((e) {
       final usdData =
           (e.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-      final priceInUsd = usdData['PRICE'];
+      final price = usdData['PRICE'];
       final imageUrl = usdData['IMAGEURL'];
       return CryptoCoin(
         name: e.key,
-        priceInUSD: priceInUsd,
+        priceInUSD: price,
         imageUrl: 'https://www.cryptocompare.com/$imageUrl',
       );
     }).toList();
     return cryptoCoinsList;
   }
   @override
-  Future<List<CryptoCoinsDetails>> getCoinDetails() async {
+  Future<CryptoCoin> getCoinDetails(String currencyCode) async {
     
     final response = await dio.get(
       'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,SOL,XRP,DOGE,USDT,USDC,LINK,DOT,XMR,ZEC,DASH,ALEO,MINA,UNI,CAKE,TWT,ADA,TRX,APT,LNEX,SHIB,TON,BONK,FTM,GRT,AAVE,AXS,MATIC&tsyms=USD',
@@ -36,21 +36,17 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
 
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;
+    final coinData = dataRaw['USD']  as Map<String, dynamic>;
     final cryptoCoinsListDetails = dataRaw.entries.map((e) {
       final usdData =
           (e.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-      final priceInUsd = usdData['PRICE'];
+      final price = usdData['PRICE'];
       final imageUrl = usdData['IMAGEURL'];
+      final lastUpdate = usdData['LASTUPDATE'];
       final high24h = usdData['HIGH24HOUR'];
       final low24h = usdData['LOW24HOUR'];
-      return CryptoCoinsDetails(
-        name: e.key,
-        priceInUSD: priceInUsd,
-        imageUrl: 'https://www.cryptocompare.com/$imageUrl',
-        high24h: high24h,
-        low24h: low24h,
-      );
+      return  CryptoCoin(name: currencyCode, priceInUSD:price , imageUrl: imageUrl);
     }).toList();
-    return cryptoCoinsListDetails;
+    
   }
 }
