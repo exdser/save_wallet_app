@@ -50,14 +50,17 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                     child: Image.network(
                       details.imageUrl,
                       // Защита от ошибок загрузки картинки
-                      errorBuilder: (context, error, stackTrace) => 
+                      errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.currency_bitcoin, size: 100),
                     ),
                   ),
                   const SizedBox(height: 20),
                   Text(
                     coin.name,
-                    style: theme.textTheme.bodyLarge?.copyWith(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   // Карточка с ценой
@@ -69,12 +72,16 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
               ),
             );
           }
-          
+
           // Если произошла ошибка
           if (state is CryptoCoinDetailsLoadingFailure) {
-             return _ErrorWidget(onRetry: () {
-               _cryptoDetailsBloc.add(LoadCryptoDetails(currencyCode: widget.coin.name));
-             });
+            return _ErrorWidget(
+              onRetry: () {
+                _cryptoDetailsBloc.add(
+                  LoadCryptoDetails(currencyCode: widget.coin.name),
+                );
+              },
+            );
           }
 
           // Показываем загрузку
@@ -97,7 +104,7 @@ class _PriceCard extends StatelessWidget {
       width: 300,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.1),
+        color: Colors.black.withValues(alpha: .1),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
@@ -121,14 +128,20 @@ class _StatsCard extends StatelessWidget {
       width: 300,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.1),
+        color: Colors.black.withValues(alpha: .1),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         children: [
-          _RowInfo(label: "High 24 Hour", value: "${details.high24Hour.toStringAsFixed(2)} \$"),
+          _RowInfo(
+            label: "High 24 Hour",
+            value: "${details.high24Hour.toStringAsFixed(2)} \$",
+          ),
           const SizedBox(height: 10),
-          _RowInfo(label: "Low 24 Hour", value: "${details.low24Hour.toStringAsFixed(2)} \$"),
+          _RowInfo(
+            label: "Low 24 Hour",
+            value: "${details.low24Hour.toStringAsFixed(2)} \$",
+          ),
         ],
       ),
     );
