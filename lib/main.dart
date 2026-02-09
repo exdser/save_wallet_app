@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_settings.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
@@ -29,6 +30,9 @@ void main() {
     
     talker.info('Firebase App ID: ${app.options.appId}');
     talker.debug('Talker started...');
+    //Инициализация Hive
+    await Hive.initFlutter();
+
 
     // Настройка Dio
     final dio = Dio();

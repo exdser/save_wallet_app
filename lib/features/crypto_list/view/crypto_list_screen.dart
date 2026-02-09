@@ -65,8 +65,8 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
             if (state is CryptoListLoadingFailure) {
               return Center(
                 child: Column(
-                  mainAxisAlignment: .center,
-                  crossAxisAlignment: .center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Something went wrong',

@@ -4,7 +4,7 @@ description: "Cool crypto application."
 publish_to: 'none' 
 version: 1.0.0+1
 environment:
-  sdk: ^3.10.7
+ sdk: '>=3.0.0 <4.0.0'
 
 
 dependencies:
@@ -20,15 +20,18 @@ dependencies:
   talker_dio_logger: ^5.1.13
   talker_bloc_logger: ^5.1.13
   firebase_core: 4.4.0
-  json_annotation: ^4.10.0
+  json_annotation: ^4.9.0 
+  hive_flutter: ^1.1.0
+  hive: ^2.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
-  json_serializable: ^6.12.0
-  build_runner: ^2.11.0
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
+  hive_generator: ^2.0.1
 
 
 
