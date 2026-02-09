@@ -14,3 +14,4 @@
 - **Networking**: [Dio](https://pub.dev) — мощный HTTP-клиент с поддержкой интерцепторов.
 - **Dependency Injection**: [GetIt](https://pub.dev) — сервис-локатор для управления зависимостями.
 - **Serialization**: [json_serializable](https://pub.dev) + [json_annotation](https://pub.dev) — автоматическая генерация моделей данных.
+- **Local Storage**: [Hive](https://pub.dev) — хранилище данных (data warehouse) поверх Hadoop, использующее SQL-подобный язык (HiveQL) для обработки больших данных
