@@ -39,7 +39,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
             icon: Icon(Icons.document_scanner),
           ),
         ],
-        title: Center(child: Text('Crypto Currencies List')),
+        title: Text('Crypto Currencies List'),
       ),
       body: RefreshIndicator(
         onRefresh: () async {

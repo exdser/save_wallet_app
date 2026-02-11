@@ -13,26 +13,32 @@ import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
+
 void main() {
   // 1. Сначала инициализируем Talker, так как он нужен для логирования ошибок в зоне
   final talker = TalkerFlutter.init();
   GetIt.I.registerSingleton<Talker>(talker);
-  
+
   // 2. Оборачиваем всё выполнение в runZonedGuarded
   runZonedGuarded(() async {
     // Теперь ВСЕ вызовы внутри этой зоны
     WidgetsFlutterBinding.ensureInitialized();
-    
+
     // Инициализация Firebase
     final app = await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    
+
     talker.info('Firebase App ID: ${app.options.appId}');
     talker.debug('Talker started...');
+    const cryptoCoinsBoxName = 'crypto_coins_box';
     //Инициализация Hive
     await Hive.initFlutter();
+    Hive.registerAdapter(CryptoCoinAdapter());
+    Hive.registerAdapter(CryptoCoinDetailAdapter());
 
+    final cryptoCoinsBox = await Hive.openBox<CryptoCoin>(cryptoCoinsBoxName);
 
     // Настройка Dio
     final dio = Dio();
@@ -54,7 +60,10 @@ void main() {
 
     // Регистрация репозитория
     GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
-      () => CryptoCoinsRepository(dio: dio),
+      () => CryptoCoinsRepository(
+        dio: dio,
+        cryptoCoinsBox: cryptoCoinsBox,
+      ),
     );
 
     // Обработка ошибок Flutter внутри зоны
@@ -64,10 +73,8 @@ void main() {
 
     // Запуск приложения
     runApp(const CryptoCurrenciesListApp());
-    
   }, (error, stack) {
     // Глобальный перехват ошибок Dart (out of zone/async errors)
     GetIt.I<Talker>().handle(error, stack);
   });
 }
-
