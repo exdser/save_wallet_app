@@ -8,7 +8,7 @@ part of 'crypto_coins_details.dart';
 
 class CryptoCoinDetailAdapter extends TypeAdapter<CryptoCoinDetail> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   CryptoCoinDetail read(BinaryReader reader) {
@@ -17,12 +17,12 @@ class CryptoCoinDetailAdapter extends TypeAdapter<CryptoCoinDetail> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CryptoCoinDetail(
-      priceInUSD: fields[0] as double,
-      imageUrl: fields[1] as String,
-      toSym: fields[2] as String,
+      priceInUSD: fields[0] == null ? 0.0 : (fields[0] as num).toDouble(),
+      imageUrl: fields[1] == null ? '' : fields[1] as String,
+      toSym: fields[2] == null ? '' : fields[2] as String,
       lastUpdate: fields[3] as DateTime,
-      high24Hour: fields[4] as double,
-      low24Hour: fields[5] as double,
+      high24Hour: fields[4] == null ? 0.0 : (fields[4] as num).toDouble(),
+      low24Hour: fields[5] == null ? 0.0 : (fields[5] as num).toDouble(),
     );
   }
 
@@ -61,13 +61,12 @@ class CryptoCoinDetailAdapter extends TypeAdapter<CryptoCoinDetail> {
 
 CryptoCoinDetail _$CryptoCoinDetailFromJson(Map<String, dynamic> json) =>
     CryptoCoinDetail(
-      priceInUSD: (json['PRICE'] as num).toDouble(),
-      imageUrl: json['IMAGEURL'] as String,
-      toSym: json['TOSYMBOL'] as String,
-      lastUpdate: CryptoCoinDetail._dateTimeFromJson(
-          (json['LASTUPDATE'] as num).toInt()),
-      high24Hour: (json['HIGH24HOUR'] as num).toDouble(),
-      low24Hour: (json['LOW24HOUR'] as num).toDouble(),
+      priceInUSD: (json['PRICE'] as num?)?.toDouble() ?? 0.0,
+      imageUrl: json['IMAGEURL'] as String? ?? '',
+      toSym: json['TOSYMBOL'] as String? ?? '',
+      lastUpdate: CryptoCoinDetail._dateTimeFromJson(json['LASTUPDATE']),
+      high24Hour: (json['HIGH24HOUR'] as num?)?.toDouble() ?? 0.0,
+      low24Hour: (json['LOW24HOUR'] as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$CryptoCoinDetailToJson(CryptoCoinDetail instance) =>

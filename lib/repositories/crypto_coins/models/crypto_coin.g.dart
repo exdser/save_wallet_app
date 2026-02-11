@@ -8,7 +8,7 @@ part of 'crypto_coin.dart';
 
 class CryptoCoinAdapter extends TypeAdapter<CryptoCoin> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   CryptoCoin read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class CryptoCoinAdapter extends TypeAdapter<CryptoCoin> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CryptoCoin(
-      name: fields[0] as String,
+      name: fields[0] == null ? '' : fields[0] as String,
       details: fields[1] as CryptoCoinDetail,
     );
   }

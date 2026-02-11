@@ -1,7 +1,7 @@
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class CryptoCoinsRepository implements AbstractCoinsRepository {
@@ -21,7 +21,7 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
       cryptoCoinsList = cryptoCoinsBox.values.toList();
     }
     cryptoCoinsList
-        .sort((a, b) => b.details.priceInUSD.compareTo(a.details.priceInUSD));
+        .sort((a, b) => b.details.priceInUSD!.compareTo(a.details.priceInUSD!));
     return cryptoCoinsList;
   }
 
